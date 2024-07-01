@@ -1,3 +1,3 @@
 import type {Rule} from './Rule'
 
-export type Rules = { [key: string]: Rule[] };
+export type Rules = Record<string, Rule[]>;

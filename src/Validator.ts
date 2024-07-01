@@ -1,15 +1,23 @@
 import type {Rule} from './types/Rule'
 import type {Rules} from './types/Rules'
 import {ValidationError} from './exceptions/ValidationError'
+import {validateRequired} from './validators/required'
+import {validateString} from './validators/string'
+import {validateNumber} from './validators/number'
+import {validateBoolean} from './validators/boolean'
+import {validateNumeric} from './validators/numeric'
+import {validateEmail} from './validators/email'
+import {validateMin} from './validators/min'
+import {validateMax} from './validators/max'
 
-class Validator {
-  private rules: Rules
+class Validator<R extends Rules> {
+  private rules: R
 
-  constructor(rules: Rules) {
+  constructor(rules: R) {
     this.rules = rules
   }
 
-  static create(rules: Rules) {
+  static create<R extends Rules>(rules: R) {
     return new this(rules)
   }
 
@@ -27,48 +35,30 @@ class Validator {
 
   private validateField(key: string, value: any, rules: Rule[], errors: { [key: string]: string[] }) {
     rules.forEach(rule => {
-      if (rule === 'required' && (value === undefined || value === null)) {
-        if (!errors[key]) {
-          errors[key] = []
-        }
-        errors[key].push(`${key} is required`)
-      }
-
-      if (rule === 'string' && typeof value !== 'string') {
-        if (!errors[key]) {
-          errors[key] = []
-        }
-        errors[key].push(`${key} is not a string`)
-      }
-
-      if (rule === 'number' && !Number.isSafeInteger(Number(value))) {
-        if (!errors[key]) {
-          errors[key] = []
-        }
-        errors[key].push(`${key} is not a number`)
-      }
-
-      if (rule === 'array' && !Array.isArray(value)) {
-        if (!errors[key]) {
-          errors[key] = []
-        }
-        errors[key].push(`${key} is not an array`)
-      }
-
-      if (rule.startsWith('min:')) {
+      if (rule === 'required') {
+        validateRequired(key, value, errors)
+      } else if (rule === 'string') {
+        validateString(key, value, errors)
+      } else if (rule === 'number') {
+        validateNumber(key, value, errors)
+      } else if (rule === 'boolean') {
+        validateBoolean(key, value, errors)
+      } else if (rule === 'numeric') {
+        validateNumeric(key, value, errors)
+      } else if (rule === 'email') {
+        validateEmail(key, value, errors)
+      } else if (rule.startsWith('min:')) {
         const minLength = parseInt(rule.split(':')[1], 10)
-        if (typeof value === 'string' && value.length < minLength) {
-          if (!errors[key]) {
-            errors[key] = []
-          }
-          errors[key].push(`${key} should be at least ${minLength} characters long`)
-        }
+        validateMin(key, value, minLength, errors)
+      } else if (rule.startsWith('max:')) {
+        const maxLength = parseInt(rule.split(':')[1], 10)
+        validateMax(key, value, maxLength, errors)
       }
     })
   }
 
   private validateArray(key: string, array: any[], errors: { [key: string]: string[] }) {
-    array.forEach((item, index) => {
+    array.forEach((_, index) => {
       Object.entries(this.rules).forEach(([ruleKey, ruleValues]) => {
         const arrayRuleKey = ruleKey.replace('.*', `[${index}]`)
         if (arrayRuleKey.startsWith(`${key}[${index}]`)) {

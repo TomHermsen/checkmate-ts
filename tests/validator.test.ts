@@ -88,4 +88,98 @@ describe('Validator', () => {
     const data = {name: 'John Doe', tags: [1, 2]}
     expect(() => validator.validateObject(data)).toThrow(ValidationError)
   })
+
+  test('should validate boolean fields', () => {
+    const validator = Validator.create({
+      'isActive': ['required', 'boolean']
+    })
+
+    const data = {isActive: true}
+    expect(() => validator.validateObject(data)).not.toThrow()
+  })
+
+  test('should throw validation errors for invalid boolean fields', () => {
+    const validator = Validator.create({
+      'isActive': ['required', 'boolean']
+    })
+
+    const data = {isActive: 'yes'}
+    expect(() => validator.validateObject(data)).toThrow(ValidationError)
+  })
+
+  test('should validate numeric fields', () => {
+    const validator = Validator.create({
+      'score': ['required', 'numeric']
+    })
+
+    const data = {score: '123.45'}
+    expect(() => validator.validateObject(data)).not.toThrow()
+  })
+
+  test('should throw validation errors for invalid numeric fields', () => {
+    const validator = Validator.create({
+      'score': ['required', 'numeric']
+    })
+
+    const data = {score: 'abc'}
+    expect(() => validator.validateObject(data)).toThrow(ValidationError)
+  })
+
+  test('should validate email fields', () => {
+    const validator = Validator.create({
+      'email': ['required', 'email']
+    })
+
+    const data = {email: 'test@example.com'}
+    expect(() => validator.validateObject(data)).not.toThrow()
+  })
+
+  test('should throw validation errors for invalid email fields', () => {
+    const validator = Validator.create({
+      'email': ['required', 'email']
+    })
+
+    const data = {email: 'invalid-email'}
+    expect(() => validator.validateObject(data)).toThrow(ValidationError)
+  })
+
+  test('should validate min length for strings and arrays', () => {
+    const validator = Validator.create({
+      'name': ['required', 'string', 'min:3'],
+      'tags': ['array', 'min:2']
+    })
+
+    const data = {name: 'John', tags: ['tag1', 'tag2']}
+    expect(() => validator.validateObject(data)).not.toThrow()
+  })
+
+  test('should throw validation errors for strings and arrays shorter than min length', () => {
+    const validator = Validator.create({
+      'name': ['required', 'string', 'min:5'],
+      'tags': ['array', 'min:3']
+    })
+
+    const data = {name: 'John', tags: ['tag1', 'tag2']}
+    expect(() => validator.validateObject(data)).toThrow(ValidationError)
+  })
+
+  test('should validate max length for strings and arrays', () => {
+    const validator = Validator.create({
+      'name': ['required', 'string', 'max:10'],
+      'tags': ['array', 'max:3']
+    })
+
+    const data = {name: 'John', tags: ['tag1', 'tag2']}
+    expect(() => validator.validateObject(data)).not.toThrow()
+  })
+
+  test('should throw validation errors for strings and arrays longer than max length', () => {
+    const validator = Validator.create({
+      'name': ['required', 'string', 'max:3'],
+      'tags': ['array', 'max:1']
+    })
+
+    const data = {name: 'John', tags: ['tag1', 'tag2']}
+    expect(() => validator.validateObject(data)).toThrow(ValidationError)
+  })
 })
