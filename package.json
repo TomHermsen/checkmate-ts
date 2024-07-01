@@ -1,0 +1,41 @@
+{
+    "name": "checkmate-ts",
+    "version": "1.0.0",
+    "description": "Checkmate Typescript - An object validator written in Typescript",
+    "type": "module",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "unbuild",
+        "test": "jest"
+    },
+    "author": {
+        "name": "Tom Hermsen",
+        "url": "https://github.com/tomhermsen"
+    },
+    "keywords": [
+        "typescript",
+        "validation",
+        "typed",
+        "data",
+        "dto",
+        "request"
+    ],
+    "license": "MIT",
+    "devDependencies": {
+        "@types/jest": "^29.5.12",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.1.5",
+        "typescript": "^5.5.2",
+        "unbuild": "^2.0.0"
+    }
+}
