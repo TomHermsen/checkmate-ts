@@ -3,6 +3,7 @@ export type Rule =
   | 'string'
   | `min:${number}`
   | `max:${number}`
+  | `in:${string}`
   | 'number'
   | 'array'
   | 'boolean'

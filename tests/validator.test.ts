@@ -182,4 +182,24 @@ describe('Validator', () => {
     const data = {name: 'John', tags: ['tag1', 'tag2']}
     expect(() => validator.validateObject(data)).toThrow(ValidationError)
   })
+
+  test('should validate in and match expected', () => {
+    const validator = Validator.create({
+      'tags': ['array'],
+      'tags.*': ['string', 'required', 'in:foo,bar']
+    })
+
+    const data = {tags: ['foo', 'bar']}
+    expect(() => validator.validateObject(data)).not.toThrow(ValidationError)
+  })
+
+  test('should validate in and throw on unmatched value', () => {
+    const validator = Validator.create({
+      'tags': ['array'],
+      'tags.*': ['string', 'required', 'in:foo,bar']
+    })
+
+    const data = {tags: ['foo', 'test']}
+    expect(() => validator.validateObject(data)).toThrow(ValidationError)
+  })
 })

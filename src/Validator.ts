@@ -9,6 +9,8 @@ import {validateNumeric} from './validators/numeric'
 import {validateEmail} from './validators/email'
 import {validateMin} from './validators/min'
 import {validateMax} from './validators/max'
+import {validateIn} from './validators/in'
+import {validateArray} from './validators/array'
 
 class Validator<R extends Rules> {
   private rules: R
@@ -47,12 +49,19 @@ class Validator<R extends Rules> {
         validateNumeric(key, value, errors)
       } else if (rule === 'email') {
         validateEmail(key, value, errors)
+      } else if (rule === 'array') {
+        validateArray(key, value, errors)
       } else if (rule.startsWith('min:')) {
         const minLength = parseInt(rule.split(':')[1], 10)
         validateMin(key, value, minLength, errors)
       } else if (rule.startsWith('max:')) {
         const maxLength = parseInt(rule.split(':')[1], 10)
         validateMax(key, value, maxLength, errors)
+      } else if (rule.startsWith('in:')) {
+        const options = rule.split(':')[1].split(',')
+        validateIn(key, value, options, errors)
+      } else {
+        throw new Error(`Rule ${rule} for field ${key} is invalid!`)
       }
     })
   }
