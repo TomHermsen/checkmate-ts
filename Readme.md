@@ -1,19 +1,22 @@
 # Typescript Validator
 
-`ts-validator` is a TypeScript library for validating data against specified rules. It supports validation for
+`checkmate-ts` is a TypeScript library for validating data against specified rules. It supports validation for
 various data types, nested objects, and arrays.
+
+It's heavily inspired by Laravel's way of validating requests
 
 ## Installation
 
 You can install the package via npm:
 
 ```bash
-npm install ts-validator
+npm install checkmate-ts
 ```
 
 Or with yarn
 ```bash
-yarn add ts-validator
+yarn add checkmate-ts
+
 ```
 
 ## Rules
@@ -75,3 +78,4 @@ try {
 }
 
 ```
+
