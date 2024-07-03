@@ -20,7 +20,11 @@
     },
     "author": {
         "name": "Tom Hermsen",
-        "url": "https://github.com/tomhermsen"
+        "url": "https://github.com/TomHermsen"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TomHermsen/checkmate-ts.git"
     },
     "keywords": [
         "typescript",
