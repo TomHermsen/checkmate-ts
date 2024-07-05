@@ -36,7 +36,13 @@ class Validator<R extends Rules> {
   }
 
   private validateField(key: string, value: any, rules: Rule[], errors: { [key: string]: string[] }) {
+    const isNullable = rules.includes('nullable')
+
     rules.forEach(rule => {
+      if (isNullable && value == null) {
+        return // If the rule allows `null` values & the value is `null`, skip validating
+      }
+
       if (rule === 'required') {
         validateRequired(key, value, errors)
       } else if (rule === 'string') {

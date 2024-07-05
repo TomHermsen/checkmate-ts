@@ -1,4 +1,5 @@
 export type Rule =
+  | 'nullable'
   | 'required'
   | 'string'
   | `min:${number}`

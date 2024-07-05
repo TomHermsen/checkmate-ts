@@ -202,4 +202,40 @@ describe('Validator', () => {
     const data = {tags: ['foo', 'test']}
     expect(() => validator.validateObject(data)).toThrow(ValidationError)
   })
+
+  test('should allow null on nullable string value', () => {
+    const validator = Validator.create({
+      'title': ['string', 'nullable'],
+    })
+
+    const data = {title: null}
+    expect(() => validator.validateObject(data)).not.toThrow(ValidationError)
+  })
+
+  test('should allow null on nullable array value', () => {
+    const validator = Validator.create({
+      'tags': ['array', 'nullable'],
+    })
+
+    const data = {tags: null}
+    expect(() => validator.validateObject(data)).not.toThrow(ValidationError)
+  })
+
+  test('should allow null on nullable number value', () => {
+    const validator = Validator.create({
+      'value': ['number', 'nullable'],
+    })
+
+    const data = {value: null}
+    expect(() => validator.validateObject(data)).not.toThrow(ValidationError)
+  })
+
+  test('should allow null on nullable numeric value', () => {
+    const validator = Validator.create({
+      'value': ['numeric', 'nullable'],
+    })
+
+    const data = {value: null}
+    expect(() => validator.validateObject(data)).not.toThrow(ValidationError)
+  })
 })
