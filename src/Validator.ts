@@ -66,6 +66,8 @@ class Validator<R extends Rules> {
       } else if (rule.startsWith('in:')) {
         const options = rule.split(':')[1].split(',')
         validateIn(key, value, options, errors)
+      } else if (rule === 'nullable') {
+        // pass
       } else {
         throw new Error(`Rule ${rule} for field ${key} is invalid!`)
       }
