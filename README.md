@@ -3,6 +3,8 @@
 `checkmate-ts` is a library for validating objects in TypeScript applications. It supports validating various data
 types, nested objects, arrays, and custom rules, ensuring type safety and reliability in data validation scenarios.
 
+Types will be inferred from the validation rules, but might not work reliably (yet).
+
 ## Usage
 ```typescript
 import {Validator} from 'checkmate-ts'

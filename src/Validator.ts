@@ -11,6 +11,7 @@ import {validateMin} from './validators/min'
 import {validateMax} from './validators/max'
 import {validateIn} from './validators/in'
 import {validateArray} from './validators/array'
+import {InferRules} from './types/InferRules'
 
 class Validator<R extends Rules> {
   private rules: R
@@ -115,8 +116,8 @@ class Validator<R extends Rules> {
     return data as T
   }
 
-  validateObject<T>(data: object): T {
-    return this.validate<T>(data)
+  validateObject(data: object): InferRules<R> {
+    return this.validate<InferRules<R>>(data)
   }
 }
 
