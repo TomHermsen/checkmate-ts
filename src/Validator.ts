@@ -114,8 +114,8 @@ class Validator<R extends Rules> {
     return data as T
   }
 
-  validateObject(data: object): InferRules<R> {
-    return this.validate<InferRules<R>>(data)
+  validateObject<T = InferRules<R>>(data: object): T {
+    return this.validate<T>(data)
   }
 }
 
