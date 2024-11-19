@@ -1,6 +1,6 @@
 {
     "name": "checkmate-ts",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "Checkmate TypeScript - A powerful and flexible object validator written in TypeScript, supporting validation for various data types, nested objects, and arrays. Ensures type safety and reliability in data validation scenarios.",
     "type": "module",
     "exports": {
